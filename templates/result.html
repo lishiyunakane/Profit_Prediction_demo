@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+    <style>
+
+        td {
+            padding: 5px 40px;
+            font-size: 16px; /* added font-size */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("resultsTable");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (dir == "asc") {
+                        if (parseFloat(x.innerHTML.replace(/,/g, '')) > parseFloat(y.innerHTML.replace(/,/g, ''))) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (parseFloat(x.innerHTML.replace(/,/g, '')) < parseFloat(y.innerHTML.replace(/,/g, ''))) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+        function downloadTable() {
+            $("#resultsTable").table2excel({
+                exclude: ".noExl",
+                name: "Results",
+                filename: "results.xls",
+                fileext: ".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+    </script>
+</head>
+<body style="background-image: url('../static/images/background.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <button onclick="downloadTable()">Download as Excel</button>
+    <h2 style="text-align: center;">Results</h2>
+    <table style="margin: auto;" id="resultsTable">
+        <thead>
+            <tr>
+                <th style="padding: 5px 40px;">Project No</th>
+                <th style="padding: 5px 40px;">Description</th>
+                <th style="padding: 5px 40px;">Client</th>
+                <th style="padding: 5px 40px;">
+                    <button onclick="sortTable(3)">Sales Amount (Home)</button>
+                </th>
+                <th style="padding: 5px 40px;">
+                    <button onclick="sortTable(4)">Predicted Gross Profit (%)</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, row in output.iterrows() %}
+            <tr>
+                <td style="padding: 5px 40px;">{{ row['Project No'] }}</td>
+                <td style="padding: 5px 40px;">{{ row['Description'] }}</td>
+                <td style="padding: 5px 40px;">{{ row['Client'] }}</td>
+                <td style="padding: 5px 40px;">{{ row['Sales\nAmount\n(Home)'] }}</td>
+                <td style="padding: 5px 40px;">{{ row[0] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>File Upload</title>
+	<style>
+		body {
+            background-image: url("../static/images/cool.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        p {
+            margin-top: 60px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: black;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		label[for="file"] {
+		    margin-top: 60px;
+            font-size: 18px;
+            margin-right: 10px;
+            color: black;
+            text-align: right;
+            flex-grow: 1;
+        }
+
+		input[type="file"] {
+			font-size: 20px;
+			margin-top: 10px;
+			padding: 10px 20px;
+			background-color: #2a9d8f;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		input[type="file"]:hover {
+			background-color: #1e6c66;
+		}
+
+		input[type="submit"] {
+			margin-top: 20px;
+			padding: 10px 20px;
+			font-size: 20px;
+			background-color: #2a9d8f;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #1e6c66;
+		}
+        .demo-note {
+            margin-top: 20px;
+            color: red; /* You can change the color to any other color */
+            font-size: 16px; /* Adjust font size as needed */
+            text-align: center;}
+	</style>
+</head>
+<body>
+
+	<form method="POST" enctype="multipart/form-data">
+        <p>Welcome to the UI for our predictive model designed to forecast the profit margin of running projects using Excel Marco. To get started, simply upload the project reports you want to analyze, downloaded from task-hub. Please note that the file format must be Excel files. The 'Choose an Excel File' button below is where you can upload your file. We appreciate your participation and hope our predictive model can provide valuable insights for your projects.</p>
+		<label for="file">Choose an Excel file:</label>
+		<input type="file" id="file" name="file">
+		<input type="submit" value="Upload">
+	</form>
+    <div class="demo-note">
+        Note: You are using a demo version designed to showcase the analytical process. The file for analysis has been pre-selected and represents a subset of the dataset. Simply click "Upload" to view the simulated analysis results.
+    </div>
+</body>
+</html>
